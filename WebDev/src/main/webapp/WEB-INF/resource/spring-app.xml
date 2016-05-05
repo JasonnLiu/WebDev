@@ -23,7 +23,7 @@
 	<bean id="viewClass"
 		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<property name="definitions">
-			<list>
+			<list> 
 				<value>/WEB-INF/resource/tiles.xml</value>
 			</list>
 		</property>
