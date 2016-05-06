@@ -15,7 +15,7 @@ public class HelloController {
 	
 	@RequestMapping(value="/test",method=RequestMethod.GET)
 	public String test(){
-		log.info("hello method");
+		log.info("hello method2");
 		return "hello";
 	}
 }
