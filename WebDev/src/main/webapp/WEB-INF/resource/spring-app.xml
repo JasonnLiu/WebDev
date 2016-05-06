@@ -10,20 +10,25 @@
       	   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<context:annotation-config />
-	<mvc:annotation-driven /> 
+	<mvc:annotation-driven />
 	<context:component-scan base-package="com.jason.controller"></context:component-scan>
 
 	<!-- view -->
-	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" 
-		/> <property name="prefix" value="/WEB-INF/jsp/" /> <property name="suffix" 
-		value=".jsp" /> </bean> -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
 
-	<bean class="org.springframework.web.servlet.view.tiles2.TilesViewResolver"></bean>
+	<bean class="org.springframework.web.servlet.view.tiles2.TilesViewResolver">
+		<property name="order" value="1"></property>
+	</bean>
 	<bean id="viewClass"
 		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<property name="definitions">
-			<list> 
+			<list>
 				<value>/WEB-INF/resource/tiles.xml</value>
 			</list>
 		</property>
