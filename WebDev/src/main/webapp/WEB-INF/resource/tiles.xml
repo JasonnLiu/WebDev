@@ -11,4 +11,10 @@
 	<definition extends=".main" name="hello">
 		<put-attribute name="body" value="/WEB-INF/jsp/hello.jsp"></put-attribute>
 	</definition>
+	<definition extends=".main" name="login">
+		<put-attribute name="body" value="/WEB-INF/jsp/login/login.jsp"></put-attribute>
+	</definition>
+	<definition extends=".main" name="index">
+		<put-attribute name="body" value="/WEB-INF/jsp/comm/index.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

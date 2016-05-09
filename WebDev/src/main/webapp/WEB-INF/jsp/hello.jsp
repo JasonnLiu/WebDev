@@ -14,6 +14,9 @@
 		<input type="text" name="addr2" value="${addr }"  /> <input
 			type="submit"  />
 	</form>
+	
+	
+	context地址：${pageContext.request.contextPath}
 
 </body>
 </html>
