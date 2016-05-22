@@ -13,13 +13,11 @@ public class LoginServiceImpl implements LoginService {
 	@Resource(name = "loginDAO")
 	private LoginDAO loginDAO;
 
-	@Override
 	public boolean check(String username, String password) {
 
 		return loginDAO.check(username, password);
 	}
 
-	@Override
 	public boolean register(String stdId, String username, String id) {
 		if (loginDAO.register(stdId, username, id)) {
 			return true;
