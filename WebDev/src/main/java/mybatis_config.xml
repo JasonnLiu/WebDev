@@ -5,7 +5,7 @@
 <configuration>
 
 	<typeAliases>
-		<typeAlias alias="User" type="com.jason.entity.comm.User" />
+		<typeAlias alias="User" type="com.jason.weixindev.entity.comm.User" />
 	</typeAliases>
 	<!-- 
 	<environments default="development">
@@ -21,7 +21,7 @@
 	</environments>
 	 -->
 	<mappers>
-		<mapper resource="com/jason/model/mybatis/login/loginMapper.xml" />
+		<mapper resource="com/jason/weixindev/model/mybatis/login/loginMapper.xml" />
 
 	</mappers>
 </configuration>

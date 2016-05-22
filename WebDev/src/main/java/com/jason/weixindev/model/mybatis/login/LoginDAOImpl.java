@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.jason.weixindev.entity.comm.Student;
 import com.jason.weixindev.entity.comm.User;
 import com.jason.weixindev.model.inface.login.LoginDAO;
 import com.jason.weixindev.model.mybatis.BaseMyBatisDAO;
@@ -23,13 +24,30 @@ public class LoginDAOImpl extends BaseMyBatisDAO implements LoginDAO {
 		log.info("loginDAO");
 		SqlSession s = getSqlSession();
 		User u = (User) s.selectOne(
-				"com.jason.model.mybatis.login.selectUser", username);
+				"com.jason.weixindev.model.mybatis.login.selectUser", username);
 		if (password.equals(u.getPassword())) {
 			log.info("loginDAO true");
 			return true;
 		} else {
 			log.info("loginDAO false");
 			return false;
+		}
+
+	}
+
+	@Override
+	public boolean register(String stdId, String username, String id) {
+		SqlSession s = getSqlSession();
+		Student stu = new Student();
+		stu.setName(username);
+		stu.setStdId(stdId);
+		stu.setId(id);
+		int i = s.insert("com.jason.weixindev.model.mybatis.login.addStudent",
+				stu);
+		if (i == 0) {
+			return false;
+		} else {
+			return true;
 		}
 
 	}

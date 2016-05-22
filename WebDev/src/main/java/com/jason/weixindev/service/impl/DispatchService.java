@@ -15,12 +15,8 @@ public class DispatchService {
 	public static String process(HttpServletRequest req) throws DocumentException, IOException{
 		String respXml = null;
 
-		Map<String, String> map = MessageUtil.parseReq(req);
 
-		String MsgType = map.get("MsgType");
-		if(MsgType.equals("зЂВс")){
-			
-		}
+		
 		
 		return respXml;
 	}
