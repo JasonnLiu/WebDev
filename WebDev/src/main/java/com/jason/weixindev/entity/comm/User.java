@@ -2,7 +2,7 @@ package com.jason.weixindev.entity.comm;
 
 public class User {
 	
-	protected String name;
+	protected String username;
 	protected String id;
 	protected String password;
 	
@@ -18,12 +18,13 @@ public class User {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
+	
 	
 	
 	

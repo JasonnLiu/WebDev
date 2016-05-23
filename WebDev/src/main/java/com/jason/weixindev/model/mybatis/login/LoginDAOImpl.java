@@ -39,7 +39,7 @@ public class LoginDAOImpl extends BaseMyBatisDAO implements LoginDAO {
 	public boolean register(String stdId, String username, String id) {
 		SqlSession s = getSqlSession();
 		Student stu = new Student();
-		stu.setName(username);
+		stu.setUsername(username);
 		stu.setStdId(stdId);
 		stu.setId(id);
 		int i = s.insert("com.jason.weixindev.model.mybatis.login.addStudent",

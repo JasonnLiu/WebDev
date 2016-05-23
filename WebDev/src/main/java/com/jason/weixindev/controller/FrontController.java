@@ -30,7 +30,7 @@ public class FrontController {
 		String timestamp = req.getParameter("timestamp");
 		String nonce = req.getParameter("nonce");
 		String echostr = req.getParameter("echostr");
-
+		log.info("verify");
 		PrintWriter out = resp.getWriter();
 		if (SignUtil.checkSign(signature, timestamp, nonce)) {
 			out.print(echostr);
@@ -51,8 +51,9 @@ public class FrontController {
 		String echostr = req.getParameter("echostr");
 
 		PrintWriter out = resp.getWriter();
+		log.info("weixinpost");
 		if (SignUtil.checkSign(signature, timestamp, nonce)) {
-
+			dispatch(req, resp);
 			// String respXml = dispatch(req,resp);
 			// out.print(respXml);
 
@@ -87,11 +88,15 @@ public class FrontController {
 
 		if (MsgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
 			String msgContent = map.get("Content");
+			log.info("weixindispatch");
+			log.info(msgContent);
 			try {
 				if (msgContent.startsWith("зЂВс")) {
 					String stdId = msgContent.substring(2);
 					req.setAttribute("stdId", stdId);
 					req.getRequestDispatcher("/login/register").forward(req, resp);
+				}else{
+					log.info("can't zhuce");
 				}
 				
 				
