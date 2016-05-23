@@ -42,8 +42,14 @@ public class LoginDAOImpl extends BaseMyBatisDAO implements LoginDAO {
 		stu.setUsername(username);
 		stu.setStdId(stdId);
 		stu.setId(id);
-		int i = s.insert("com.jason.weixindev.model.mybatis.login.addStudent",
-				stu);
+		int i = 0;
+		try{
+			 i = s.insert("com.jason.weixindev.model.mybatis.login.addStudent",
+					stu);
+		}catch(Exception e){
+			i = 0;
+		}
+		
 		if (i == 0) {
 			return false;
 		} else {

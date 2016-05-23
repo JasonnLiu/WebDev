@@ -2,6 +2,7 @@ package com.jason.weixindev.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -40,9 +41,13 @@ public class FrontController {
 	}
 
 	@RequestMapping(value = "/weixin", method = RequestMethod.POST)
-	public void service(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException, DocumentException {
-		req.setCharacterEncoding("UTF-8");
+	public void service(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			req.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		resp.setCharacterEncoding("UTF-8");
 
 		String signature = req.getParameter("signature");
@@ -50,7 +55,13 @@ public class FrontController {
 		String nonce = req.getParameter("nonce");
 		String echostr = req.getParameter("echostr");
 
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
+		try {
+			out = resp.getWriter();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		log.info("weixinpost");
 		if (SignUtil.checkSign(signature, timestamp, nonce)) {
 			dispatch(req, resp);
@@ -76,7 +87,7 @@ public class FrontController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		String MsgType = null;
 		if (map != null) {
 			MsgType = map.get("MsgType");
@@ -91,22 +102,34 @@ public class FrontController {
 			log.info("weixindispatch");
 			log.info(msgContent);
 			try {
-				if (msgContent.startsWith("ע��")) {
+				if (msgContent.startsWith("注册")) {
 					String stdId = msgContent.substring(2);
 					req.setAttribute("stdId", stdId);
-					req.getRequestDispatcher("/login/register").forward(req, resp);
-				}else{
+					req.getRequestDispatcher("/login/register").forward(req,
+							resp);
+				} else if(msgContent.equals("签到结束")){
+					req.getRequestDispatcher("/attendance/end").forward(req,
+							resp);
+				}
+				else {
 					log.info("can't zhuce");
 				}
-				
-				
-				
-				
+
 			} catch (ServletException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
+		} else if (MsgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
+			try {
+				req.getRequestDispatcher("/attendance/begin").forward(req, resp);
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}

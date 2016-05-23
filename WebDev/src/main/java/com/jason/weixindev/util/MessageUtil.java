@@ -13,8 +13,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import com.jason.weixindev.message.req.TextMessage;
 import com.jason.weixindev.message.resp.NewsMessage;
+import com.jason.weixindev.message.resp.TextMessage;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;

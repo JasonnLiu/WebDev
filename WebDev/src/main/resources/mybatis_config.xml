@@ -22,6 +22,7 @@
 	 -->
 	<mappers>
 		<mapper resource="com/jason/weixindev/model/mybatis/login/loginMapper.xml" />
+		<mapper resource="com/jason/weixindev/model/mybatis/attendance/attendanceMapper.xml" />
 
 	</mappers>
 </configuration>

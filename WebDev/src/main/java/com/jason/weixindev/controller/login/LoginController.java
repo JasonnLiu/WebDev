@@ -1,5 +1,8 @@
 package com.jason.weixindev.controller.login;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -12,8 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jason.weixindev.message.resp.TextMessage;
 import com.jason.weixindev.model.mybatis.login.LoginDAOImpl;
 import com.jason.weixindev.service.inface.login.LoginService;
+import com.jason.weixindev.util.MessageUtil;
 
 @Controller
 @RequestMapping("/login")
@@ -39,28 +44,48 @@ public class LoginController {
 	}
 
 	@RequestMapping("/register")
-	public String register(HttpServletRequest req, HttpServletResponse resp) {
+	public void register(HttpServletRequest req, HttpServletResponse resp) {
 
 		String stdId = (String) req.getAttribute("stdId");
 		String username = "student";
 		Map map = (Map) req.getAttribute("map");
-		
+
 		log.info(stdId);
 		log.info(username);
-		
+		String respContent;
 		if (stdId == null || username == null) {
-			return "register";
+			respContent = "注册失败，请联系管理员";
 		} else {
-			//Map map = (Map) req.getAttribute("map");
-			//String id = (String) map.get("FromUserName");
+			// Map map = (Map) req.getAttribute("map");
+			// String id = (String) map.get("FromUserName");
 			String id = (String) map.get("FromUserName");
-			if (loginService.register(stdId, username,id)) {
-				return "register_suc";
+			if (loginService.register(stdId, username, id)) {
+				respContent = "注册成功，您的注册学号是"+stdId;
 			} else {
-				return "register";
+				respContent = "注册失败，请联系管理员";
 			}
-
 		}
+
+		String respXml = null;
+		
+		TextMessage tm = new TextMessage();
+		tm.setFromUserName((String) map.get("ToUserName"));
+		tm.setToUserName((String) map.get("FromUserName"));
+		tm.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+		tm.setCreateTime(new Date().getTime());
+		tm.setContent(respContent);
+		respXml = MessageUtil.message2xml(tm);
+		PrintWriter out = null;
+		try {
+			out = resp.getWriter();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		out.print(respXml);
+		out.close();
+		out = null;
+		
 
 	}
 
