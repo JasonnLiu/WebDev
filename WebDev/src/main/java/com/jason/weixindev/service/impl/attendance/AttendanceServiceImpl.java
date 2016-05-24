@@ -1,5 +1,7 @@
 package com.jason.weixindev.service.impl.attendance;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -28,6 +30,16 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public String getStdId(String id) {
 		return attendanceDAO.getStdId(id);
+	}
+
+	@Override
+	public List<Record> getRecordDetail(String date) {
+		return attendanceDAO.getRecordDetail(date);
+	}
+
+	@Override
+	public String getUsernameByStdId(String stdId) {
+		return attendanceDAO.getUsernameByStdId(stdId);
 	}
 
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jason.weixindev.entity.attendance.Record;
+import com.jason.weixindev.entity.attendance.RecordFacade;
 import com.jason.weixindev.message.resp.Article;
 import com.jason.weixindev.message.resp.NewsMessage;
 import com.jason.weixindev.message.resp.TextMessage;
@@ -95,7 +96,7 @@ public class AttendanceController {
 		a.setTitle("签到情况");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date = sdf.format(new Date());
-		String url = "http://115.29.141.152/WebDev/attendance/detail/"+date;
+		String url = "http://115.29.141.152/WebDev/attendance/detail/" + date;
 		a.setUrl(url);
 		List<Article> list = new ArrayList<Article>();
 		list.add(a);
@@ -116,7 +117,32 @@ public class AttendanceController {
 	}
 
 	@RequestMapping("/detail/{date}")
-	public String detail(@PathVariable String date) {
+	public String detail(@PathVariable String date, Map<String, Object> model) {
+		log.info(date);
+		List<Record> list = attendanceService.getRecordDetail(date);
+		int size = list.size();
+		int total = 26;
+		int quexi = total - size;
+		log.info(size + "");
+		model.put("total", total);
+		model.put("atten", size);
+		model.put("quexi", quexi);
+		List<RecordFacade> list1 = new ArrayList<RecordFacade>();
+		for (Record r : list) {
+			RecordFacade rf = new RecordFacade();
+			rf.setStdId(r.getStdId());
+			rf.setAttenTime(r.getAttenTime());
+			rf.setUsername(attendanceService.getUsernameByStdId(r.getStdId()));
+			list1.add(rf);
+		}
+
+		model.put("records", list1);
+		return "attendance_detail";
+	}
+
+	@RequestMapping("/test/detail/{date}")
+	public String detailtest(@PathVariable String date,
+			Map<String, Object> model) {
 		Date time = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -125,6 +151,25 @@ public class AttendanceController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		log.info(date);
+		List<Record> list = attendanceService.getRecordDetail(date);
+		int size = list.size();
+		int total = 26;
+		int quexi = total - size;
+		log.info(size + "");
+		model.put("total", total);
+		model.put("atten", size);
+		model.put("quexi", quexi);
+		List<RecordFacade> list1 = new ArrayList<RecordFacade>();
+		for (Record r : list) {
+			RecordFacade rf = new RecordFacade();
+			rf.setStdId(r.getStdId());
+			rf.setAttenTime(r.getAttenTime());
+			rf.setUsername(attendanceService.getUsernameByStdId(r.getStdId()));
+			list1.add(rf);
+		}
+
+		model.put("records", list1);
 		return "attendance_detail";
 	}
 

@@ -12,9 +12,18 @@
 		users where id = #{id}
 	</select>
 
-	<insert id="addRecord" parameterType="com.jason.weixindev.entity.attendance.Record">
+	<insert id="addRecord" parameterType="Record">
 		insert into records (stdId,attenTime,CreateTime,Location_X,Location_Y)
 		values (#{stdId},#{attenTime},#{CreateTime},#{Location_X},#{Location_Y})
 	</insert>
+	
+	<select id="getRecordDetail" parameterType="String" resultType="Record" >
+	SELECT * FROM records WHERE DAY(attenTime) = DAY(#{date});
+	</select>
+	
+	<select id="getUsernameByStdId" resultType="String">
+		select username from
+		users where stdId = #{stdId}
+	</select>
 
 </mapper>

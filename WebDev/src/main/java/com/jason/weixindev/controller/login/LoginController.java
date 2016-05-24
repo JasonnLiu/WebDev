@@ -36,6 +36,7 @@ public class LoginController {
 		if (loginService.check(username, password)) {
 			HttpSession s = request.getSession();
 			s.setAttribute("username", username);
+			log.info("afd");
 			return "index";
 		} else {
 			return "login";
@@ -47,7 +48,7 @@ public class LoginController {
 	public void register(HttpServletRequest req, HttpServletResponse resp) {
 
 		String stdId = (String) req.getAttribute("stdId");
-		String username = "student";
+		String username = (String) req.getAttribute("username");
 		Map map = (Map) req.getAttribute("map");
 
 		log.info(stdId);
@@ -60,7 +61,7 @@ public class LoginController {
 			// String id = (String) map.get("FromUserName");
 			String id = (String) map.get("FromUserName");
 			if (loginService.register(stdId, username, id)) {
-				respContent = "注册成功，您的注册学号是"+stdId;
+				respContent = "注册成功，您的注册学号是"+stdId+"您的姓名是"+username;
 			} else {
 				respContent = "注册失败，请联系管理员";
 			}
@@ -85,6 +86,38 @@ public class LoginController {
 		out.print(respXml);
 		out.close();
 		out = null;
+		
+
+	}
+	
+	@RequestMapping("/test/register")
+	public void registertest(HttpServletRequest req, HttpServletResponse resp) {
+
+		String stdId = "2013";
+		String username = "中文";
+
+		log.info(stdId);
+		log.info(username);
+		String respContent;
+		if (stdId == null || username == null) {
+			respContent = "注册失败，请联系管理员";
+		} else {
+			// Map map = (Map) req.getAttribute("map");
+			// String id = (String) map.get("FromUserName");
+			String id="id2013";
+			if (loginService.register(stdId, username, id)) {
+				respContent = "注册成功，您的注册学号是"+stdId;
+			} else {
+				respContent = "注册失败，请联系管理员";
+			}
+		}
+
+		try {
+			resp.getWriter().print(respContent);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 
 	}

@@ -23,4 +23,7 @@
 	<definition extends=".main" name="index">
 		<put-attribute name="body" value="/WEB-INF/jsp/comm/index.jsp"></put-attribute>
 	</definition>
+	<definition extends=".main" name="attendance_detail">
+		<put-attribute name="body" value="/WEB-INF/jsp/attendance/attendance_detail.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

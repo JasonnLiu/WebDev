@@ -1,5 +1,7 @@
 package com.jason.weixindev.model.mybatis.attendance;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +33,30 @@ public class AttendanceDAOImpl extends BaseMyBatisDAO implements AttendanceDAO {
 		SqlSession s = getSqlSession();
 		int i = s.insert(
 				"com.jason.weixindev.model.mybatis.attendance.addRecord", r);
-		if(i == 0 ){
+		if (i == 0) {
 			return false;
-		}else{
+		} else {
 			return true;
 		}
+	}
+
+	@Override
+	public List<Record> getRecordDetail(String date) {
+		SqlSession s = getSqlSession();
+		List<Record> l = s.selectList(
+				"com.jason.weixindev.model.mybatis.attendance.getRecordDetail",
+				date);
+		return l;
+	}
+
+	@Override
+	public String getUsernameByStdId(String stdId) {
+		String username = null;
+		SqlSession s = getSqlSession();
+		username = s.selectOne(
+				"com.jason.weixindev.model.mybatis.attendance.getUsernameByStdId", stdId);
+
+		return username;
 	}
 
 }

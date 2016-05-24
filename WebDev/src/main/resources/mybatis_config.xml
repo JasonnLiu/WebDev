@@ -6,6 +6,7 @@
 
 	<typeAliases>
 		<typeAlias alias="User" type="com.jason.weixindev.entity.comm.User" />
+		<typeAlias alias="Record" type="com.jason.weixindev.entity.attendance.Record" />
 	</typeAliases>
 	<!-- 
 	<environments default="development">

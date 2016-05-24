@@ -103,8 +103,10 @@ public class FrontController {
 			log.info(msgContent);
 			try {
 				if (msgContent.startsWith("注册")) {
-					String stdId = msgContent.substring(2);
+					String stdId = msgContent.substring(2,15);
+					String username = msgContent.substring(15);
 					req.setAttribute("stdId", stdId);
+					req.setAttribute("username", username);
 					req.getRequestDispatcher("/login/register").forward(req,
 							resp);
 				} else if(msgContent.equals("签到结束")){
